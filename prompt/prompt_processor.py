@@ -17,7 +17,7 @@ def main(prompt_text):
     messages = [
         HumanMessage(content=f"Extract the start and end dates and concept from this prompt: '{prompt_text}'.\n" +
         "Follow these rules:\n" +
-        "The concept should be one of: 'average_carbon_intensity', 'maximum_carbon_intensity', 'minimum_carbon_intensity', or 'predict_least_carbon'. The concept is based on the content of the prompt. For example, if the prompt is about finding the highest carbon emissions or producing, USE ONLY 'maximum_carbon_intensity'. If the prompt is about finding the average level of emissions, it should be 'average_carbon_intensity'.For lowest or minimum it should be minimum_carbon_intensity.'\n" +
+        "The concept should be one of: 'average_carbon_intensity', 'maximum_carbon_intensity', 'minimum_carbon_intensity', or 'predict_least_carbon'. The concept is based on the content of the prompt. For example, if the prompt is about finding the most carbon emissions or highest carbon emissions or producing, USE ONLY 'maximum_carbon_intensity'. If the prompt is about finding the average level of emissions, it should be 'average_carbon_intensity'.For lowest or minimum it should be minimum_carbon_intensity.'\n" +
         "1. For specific dates like 'April 2022', assume start and end dates as the first and last day of that month.\n" +
         "2. For month and year, use the first and last day of the month.\n" +
         "3. For only a year, use January 1st and December 31st of that year.\n" +
