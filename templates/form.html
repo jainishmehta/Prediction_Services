@@ -1,0 +1,25 @@
+<!-- templates/form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Input Query</title>
+</head>
+<body>
+    <h1>Enter your query</h1>
+    <form action="/process_prompt/" method="get">
+        <label for="prompt">Query:</label>
+        <input type="text" id="prompt" name="prompt" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if input %}
+        <h2>Input:</h2>
+        <p>{{ input }}</p>
+    {% endif %}
+
+    {% if output %}
+        <h2>Output:</h2>
+        <p>{{ output }}</p>
+    {% endif %}
+</body>
+</html>
