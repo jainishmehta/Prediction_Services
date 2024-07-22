@@ -22,13 +22,14 @@ This will launch a server at http://localhost:8000 with a welcome message.
 
 You can access the following endpoints:
 
-    /max/ - Description of functionality.
-    /average/ - Description of functionality.
-    /min/ - Description of functionality.
-    /variance/ - Description of functionality.
-    /preferences/ - Description of functionality.
-    /predict_least_carbon/ - Description of functionality.
-    /predict_advanced_least_carbon/ - Description of functionality.
+    /max/ - Get the maximum value reported in the time series.
+    /average/ - Get the average value computed from all the v
+time series identified by ts_id.
+    /min/ - Get the smallest value reported on the interval
+    /variance/ - Get the variance on the interval.
+    /preferences/ - Store customer preferences with cust_id and perf.
+    /predict_least_carbon/ - Predict the single best month next year during which there will have the lowest average carbon intensity
+    /predict_advanced_least_carbon/ - A more rigorous time series analysis of above.
     /give_prompt/ - Submit a prompt to the LLM.
 Make sure to provide the correct parameters for each API route.
 
