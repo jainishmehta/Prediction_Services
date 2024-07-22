@@ -17,7 +17,7 @@ def main(prompt_text):
     messages = [
         HumanMessage(content=f"Extract the start and end dates and concept from this prompt: '{prompt_text}'.\n" +
         "Follow these rules:\n" +
-        "The concept should be one of: 'average_carbon_intensity', 'maximum_carbon_intensity', 'minimum_carbon_intensity', or 'predict_least_carbon'. The concept is based on the content of the prompt. For example, if the prompt is about finding the highest carbon emissions or producing, USE ONLY 'maximum_carbon_intensity'. If the prompt is about finding the average level of emissions, it should be 'average_carbon_intensity'.\n" +
+        "The concept should be one of: 'average_carbon_intensity', 'maximum_carbon_intensity', 'minimum_carbon_intensity', or 'predict_least_carbon'. The concept is based on the content of the prompt. For example, if the prompt is about finding the highest carbon emissions or producing, USE ONLY 'maximum_carbon_intensity'. If the prompt is about finding the average level of emissions, it should be 'average_carbon_intensity'.For lowest or minimum it should be minimum_carbon_intensity.'\n" +
         "1. For specific dates like 'April 2022', assume start and end dates as the first and last day of that month.\n" +
         "2. For month and year, use the first and last day of the month.\n" +
         "3. For only a year, use January 1st and December 31st of that year.\n" +
@@ -29,13 +29,12 @@ def main(prompt_text):
         "Start Date: YYYY-MM-DDTHH:MM:SS.SSSZ End Date: YYYY-MM-DDTHH:MM:SS.SSSZ Concept: [concept]")
     ]
 
-prompt = ChatPromptTemplate.from_messages(messages)
+    prompt = ChatPromptTemplate.from_messages(messages)
 
-chain = prompt | llm | StrOutputParser()
+    chain = prompt | llm | StrOutputParser()
+    input_data = {}
 
-input_data = {}
-
-response = chain.invoke(input_data)
+    response = chain.invoke(input_data)
     result = re.search(
     r"Start Date:\s*(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)\s*End Date:\s*(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)\s*Concept:\s*(\w+)",
     response
@@ -132,5 +131,4 @@ def process_prompt(prompt: str) -> str:
 
 if __name__ == "__main__":
     prompt_text = os.getenv('PROMPT_TEXT', '')
-
     print(process_prompt(prompt_text))

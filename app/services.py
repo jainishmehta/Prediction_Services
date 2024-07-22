@@ -146,6 +146,10 @@ def iso_to_datetime(date_str: str) -> Optional[datetime]:
 def call_api(prompt: str, closest_concept: str, ts_id: str, start_str: str, end_str: str, last_available_date: datetime):
     start_date = datetime.fromisoformat(start_str)
     end_date = datetime.fromisoformat(end_str)
+    
+    start_date_str = start_date.strftime("%B %d %Y")
+    end_date_str = end_date.strftime("%B %d %Y")
+
     last_available_date = datetime.fromisoformat(last_available_date)
 
     if not is_date_range_valid(iso_to_datetime(start_str), iso_to_datetime(end_str), last_available_date):
@@ -154,13 +158,13 @@ def call_api(prompt: str, closest_concept: str, ts_id: str, start_str: str, end_
         params = {"ts_id": ts_id}
 
     if closest_concept == 'maximum_carbon_intensity':
-         return f"Calling the function get_max(id, start, end) will return {get_max(ts_id, start_str, end_str)} Tons CO2e/GWh, in 2021."
+         return f"Calling the function get_max(id, start, end) will return {get_max(ts_id, start_str, end_str)} Tons CO2e/GWh, from {start_date_str} to {end_date_str}."
     elif closest_concept == 'average_carbon_intensity':
-        return f"Calling the function get_avg(id, start, end) will return {get_avg(ts_id, start_str, end_str)} Tons CO2e/GWh, on May 2020."
+        return f"Calling the function get_avg(id, start, end) will return {get_avg(ts_id, start_str, end_str)} Tons CO2e/GWh, from {start_date_str} to {end_date_str}."
     elif closest_concept == 'minimum_carbon_intensity':
-        return f"Calling the function get_min(id, start, end) will return {get_min(ts_id, start_str, end_str)} Tons CO2e/GWh, in 2021."
+        return f"Calling the function get_min(id, start, end) will return {get_min(ts_id, start_str, end_str)} Tons CO2e/GWh, from {start_date_str} to {end_date_str}."
     elif closest_concept == 'predict_least_carbon':
-        return f"Calling the function predict_least_carbon(id, start, end) will return {get_predict_least_carbon(ts_id)['predicted_value']} Tons CO2e/GWh, for the upcoming year."
+        return f"Calling the function predict_least_carbon(id, start, end) will return {get_predict_least_carbon(ts_id)['predicted_value']} Tons CO2e/GWh, for {end_date_str}."
     else:
         raise ValueError("Unknown concept")
 
@@ -179,7 +183,6 @@ def get_prompt_response(prompt: str):
     stdout, stderr = process.communicate()
 
     stdout_str = stdout.strip()
-    print(stdout_str)
     data_tuple = ast.literal_eval(stdout_str)
 
     start_date_str, end_date_str, concept, last_available_date_str = data_tuple

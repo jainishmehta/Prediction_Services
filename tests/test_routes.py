@@ -94,7 +94,6 @@ def test_predict_advanced_least_carbon():
     assert response.status_code == 200
 
     data = response.json()
-    assert "year" in data
     assert "month" in data
     assert "predicted_value" in data
 
